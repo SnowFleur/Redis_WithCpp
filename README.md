@@ -33,7 +33,7 @@ Redis R&D 및 C++ 개인 서버 엔진 DB 파트에 RDBMS 외에 NOSQL도 지원
 http://redisgate.kr/redis/clients/hiredis_intro.php    
 
 - redisServer 설치법(영어)</br>
-https://redis.io/docs/getting-started/installation/install-redis-on-windows/   
+https://redis.io/docs/getting-started/installation/
 
 - C++ Windows에서 Redis 사용하기(한글)</br>
 https://jacking75.github.io/cpp_use_simple_win32_hiredis/  </br>
