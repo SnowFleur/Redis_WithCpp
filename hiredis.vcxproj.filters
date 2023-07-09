@@ -5,18 +5,60 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{2c52208d-fd1f-4306-9c48-8c1345d56da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스파일\Redis">
+      <UniqueIdentifier>{a6827e4e-3889-455c-a127-0a19f0caa8b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스파일</Filter>
     </ClCompile>
-    <ClCompile Include="RedisConnector.cpp">
-      <Filter>소스파일</Filter>
+    <ClCompile Include="ReidConnector.cpp">
+      <Filter>소스파일\Redis</Filter>
+    </ClCompile>
+    <ClCompile Include="RedisProcessor.cpp">
+      <Filter>소스파일\Redis</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RedisConnector.h">
+    <ClInclude Include="DBBase.h">
       <Filter>소스파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RedisConnector.h">
+      <Filter>소스파일\Redis</Filter>
+    </ClInclude>
+    <ClInclude Include="ODBCConnector.h">
+      <Filter>소스파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RedisProcessor.h">
+      <Filter>소스파일\Redis</Filter>
+    </ClInclude>
+    <ClInclude Include="RedisQuery.h">
+      <Filter>소스파일\Redis</Filter>
+    </ClInclude>
+    <ClInclude Include="common\GlobalUtilFunctions.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\IniParser.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\LogCollector.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\ObjectPool.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\Singleton.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\WindowsHeader.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\DefineUtilty.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

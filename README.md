@@ -15,6 +15,11 @@ Redis R&D 및 C++ 개인 서버 엔진 DB 파트에 RDBMS 외에 NOSQL도 지원
 |RedisClient|Windows 10|Hiredis 사용|
 |RedisStressTool|Windows 10| 제작한 Lib 이용해서 할까말까 고민..|
 
+### 사용 개발 툴
+VisualStudio 2022(C++17)
+
+
+
 
 ### 목표
 1. 많이 사용하는 자료구조 CRUD 제작(String, Set, ZSet, List)

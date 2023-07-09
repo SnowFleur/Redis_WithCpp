@@ -80,10 +80,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RedisConnector.cpp" />
+    <ClCompile Include="RedisProcessor.cpp" />
+    <ClCompile Include="ReidConnector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RedisConnector.h" />
+    <ClInclude Include="common\DefineUtilty.h" />
+    <ClInclude Include="common\GlobalUtilFunctions.h" />
+    <ClInclude Include="common\IniParser.h" />
+    <ClInclude Include="common\LogCollector.h" />
+    <ClInclude Include="common\ObjectPool.h" />
+    <ClInclude Include="common\Singleton.h" />
+    <ClInclude Include="common\WindowsHeader.h" />
+    <ClInclude Include="DBBase.h" />
+    <ClInclude Include="ODBCConnector.h" />
+    <ClInclude Include="RedisConnector.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="RedisProcessor.h" />
+    <ClInclude Include="RedisQuery.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
