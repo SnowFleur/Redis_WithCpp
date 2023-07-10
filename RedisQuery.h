@@ -1,53 +1,88 @@
 #pragma once
 #include<string>
 #include<memory>
-
+#include"RedisConnector.h"
 using SharedPtrRedisReplay = std::shared_ptr<redisReply>;
 
-/*각 CRUD마다 Range로 나눈것 MAX를 넘어서면 안됨!!*/
 enum class REDIS_TYPE : uint8_t
 {
-	//Insert
+	//기본적인 CRUD
+	//Set
 	INSERT_SET = 1
-	, INSERT_STRING
-	, INSERT_ZSET
-	, INSERT_MAX = 51
-	//Read
 	, READ_SET
-	, READ_STRING
-	, READ_ZSET
-	, READ_MAX = 102
-	//Update
 	, UPDATE_SET
-	, UPDATE_STRING
-	, UPDATE_ZSET
-	, UPDATE_MAX = 153
-	// Delete
 	, DELETE_SET
+	//String
+	, INSERT_STRING
+	, READ_STRING
+	, UPDATE_STRING
 	, DELETE_STRING
+	//ZSet
+	, INSERT_ZSET
+	, READ_ZSET
+	, READ_ZSET_WITH_SCORE
+	, UPDATE_ZSET
 	, DELETE_ZSET
-	, DELETE_MAX = 204
-	// Print 
-	, PRINT_SET
-	, PRINT_STRING
-	, PRINT_ZSET
-	, PRINT_MAX = 255
+
 };
+
+constexpr int MAX_COMMAND_SIZE = 1024;
 
 class RedisQuery
 {
+private:
 	const REDIS_TYPE type_;
 	const std::string key_;
 	const std::string value_;
+	char command_[MAX_COMMAND_SIZE];
 public:
 	RedisQuery(const REDIS_TYPE type, const std::string key, const std::string& value) : type_(type), key_(key), value_(value)
-	{}
+	{
+		memset(command_, 0, MAX_COMMAND_SIZE);
+	}
 	RedisQuery(const REDIS_TYPE type, const std::string& key) : type_(type), key_(key), value_("")
-	{}
+	{
+		memset(command_, 0, MAX_COMMAND_SIZE);
+	}
+	
+	~RedisQuery() 
+	{
+		memset(command_, 0, MAX_COMMAND_SIZE);
+	}
 
-	inline REDIS_TYPE GetRedisType()const 		{ return type_; }
-	inline const std::string GetKey()const 		{ return key_; }
-	inline const std::string GetValue()const 	{ return value_; }
+
+	REDIS_TYPE GetRedisType()const
+	{
+		return type_;
+	}
+
+	const std::string GetKey()const
+	{
+		return key_;
+	}
+
+	const std::string GetValue()const
+	{
+		return value_;
+	}
+
+	bool SetRedisCommand(const char* pCommand)
+	{
+		if (pCommand != nullptr)
+		{
+			memcpy_s(command_, MAX_COMMAND_SIZE, pCommand, MAX_COMMAND_SIZE);
+			return true;
+		}
+		return false;
+	}
+	
+	const char* GetRedisCommand()const
+	{
+		return command_;
+	}
+
+	virtual bool CreateRedisCommand() = 0;
+	
 };
 
 class RedisResult
@@ -57,4 +92,9 @@ public:
 	REDIS_TYPE				redsiType_;
 	SharedPtrRedisReplay	pData_;
 	bool					result_;
+public:
+	RedisResult() :redsiType_(), pData_(nullptr), result_(false) {}
 };
+
+
+

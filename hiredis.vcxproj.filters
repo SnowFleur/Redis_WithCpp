@@ -11,15 +11,18 @@
     <Filter Include="소스파일\Redis">
       <UniqueIdentifier>{a6827e4e-3889-455c-a127-0a19f0caa8b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스파일\Redis\DataType">
+      <UniqueIdentifier>{5c92f6cd-84a6-481f-bd44-6f5be1ed84da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스파일</Filter>
     </ClCompile>
-    <ClCompile Include="ReidConnector.cpp">
+    <ClCompile Include="RedisProcessor.cpp">
       <Filter>소스파일\Redis</Filter>
     </ClCompile>
-    <ClCompile Include="RedisProcessor.cpp">
+    <ClCompile Include="RedisConnector.cpp">
       <Filter>소스파일\Redis</Filter>
     </ClCompile>
   </ItemGroup>
@@ -39,12 +42,6 @@
     <ClInclude Include="RedisQuery.h">
       <Filter>소스파일\Redis</Filter>
     </ClInclude>
-    <ClInclude Include="common\GlobalUtilFunctions.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="common\IniParser.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="common\LogCollector.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -59,6 +56,15 @@
     </ClInclude>
     <ClInclude Include="common\DefineUtilty.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="RedisString.h">
+      <Filter>소스파일\Redis\DataType</Filter>
+    </ClInclude>
+    <ClInclude Include="RedisSet.h">
+      <Filter>소스파일\Redis\DataType</Filter>
+    </ClInclude>
+    <ClInclude Include="RedisZset.h">
+      <Filter>소스파일\Redis\DataType</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
