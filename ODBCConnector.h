@@ -1,5 +1,6 @@
 #pragma once
 #include"DBBase.h"
+#include<string>
 
 class ODBCQuery
 {
@@ -13,15 +14,6 @@ public:
 	bool result_;
 };
 
-class ODBCProcessor : public DBProcessor<ODBCQuery, ODBCResult>
-{
-public:
-	ODBCProcessor() :DBProcessor{} {}
-	void ExcuteQuery(ODBCQuery* pDBContext, DBContextCallBack<ODBCResult> dbResult)override 
-	{
-	
-	}
-};
 
 class ODBCConnector : public DBConnector<ODBCQuery, ODBCResult>
 {
@@ -39,15 +31,10 @@ public:
 
 	}
 public:
-	bool Connect()override 
-	{
+	bool Connect()override {}
+	bool Disconnect()override {}
+	void Excute(ODBCQuery* pDBContext, DBContextCallBack<ODBCResult> pCallBackFunction)override {}
 
-	}
-	bool Disconnect()override 
-
-	{
-	
-	}
 };
 
 
