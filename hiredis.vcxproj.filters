@@ -19,9 +19,6 @@
     <ClCompile Include="main.cpp">
       <Filter>소스파일</Filter>
     </ClCompile>
-    <ClCompile Include="RedisProcessor.cpp">
-      <Filter>소스파일\Redis</Filter>
-    </ClCompile>
     <ClCompile Include="RedisConnector.cpp">
       <Filter>소스파일\Redis</Filter>
     </ClCompile>
@@ -35,9 +32,6 @@
     </ClInclude>
     <ClInclude Include="ODBCConnector.h">
       <Filter>소스파일</Filter>
-    </ClInclude>
-    <ClInclude Include="RedisProcessor.h">
-      <Filter>소스파일\Redis</Filter>
     </ClInclude>
     <ClInclude Include="RedisQuery.h">
       <Filter>소스파일\Redis</Filter>

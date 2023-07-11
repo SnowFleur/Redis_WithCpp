@@ -20,8 +20,12 @@ int main()
 		//Test_String();
 		Test_ZSet();
 		//Test_Set();
+		g_pDBConnector->Disconnect();
 	}
-	g_pDBConnector->Disconnect();
+	else 
+	{
+		std::cout << "Ä¿³ØÆ® ½ÇÆÐ\n";
+	}
 }
 
 void Result(RedisResult result)

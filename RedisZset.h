@@ -1,7 +1,6 @@
 #pragma once
 #include"RedisQuery.h"
 
-
 class RedisZSet : public RedisQuery
 {
 private:
@@ -17,10 +16,10 @@ private:
 	}
 
 	/* Zset에 데이터 가져오기 */
-	bool GetZSetMembers(bool withScroes)
+	bool GetZSetMembers(bool withScores)
 	{
 		char command[MAX_COMMAND_SIZE];
-		if (withScroes == true)
+		if (withScores == true)
 		{
 			sprintf_s(command, MAX_COMMAND_SIZE, "ZRANGE %s %d %d withscores", GetKey().c_str(), startIndex_, endIndex_);
 		}

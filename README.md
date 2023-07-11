@@ -18,9 +18,6 @@ Redis R&D 및 C++ 개인 서버 엔진 DB 파트에 RDBMS 외에 NOSQL도 지원
 ### 사용 개발 툴
 VisualStudio 2022(C++17)
 
-
-
-
 ### 목표
 1. 많이 사용하는 자료구조 CRUD 제작(String, Set, ZSet, List)
 2. RedisServer에서 잘 작동하는지 체크
@@ -31,6 +28,22 @@ VisualStudio 2022(C++17)
 
 ### 완료 예상 날짜
 2023년 7월~8월 사이
+
+
+### UML
+![UML](./UML.PNG)
+
+
+
+### 클래스 
+|클래스|설명|
+|------|---|
+|DBConnector|모든 DB커넥터가 상속받는 베이스 클래스|
+|RedisConnector|Redis와 커넥션 및 쿼리를 실행하는 Redis 클래스|
+|RedisQuery |  RedisQuery를 담당하는 베이스 클래스|
+|RedisResult| Redis Query 실행 결과를 가지고 있는 클래스|
+|RedisSet, RedisString, RedisZset| RedisQuery를 상속받으면서 각 각 redis의 자료구조의 CRUD를 지원하는 클래스|
+
 
 
 ### Reference

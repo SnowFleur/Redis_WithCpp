@@ -1,6 +1,6 @@
 #include"common/LogCollector.h"
 #include"RedisConnector.h"
-#include"RedisProcessor.h"
+#include"RedisQuery.h"
 
 RedisConnector::RedisConnector(const std::string& redisServerIP, const uint16_t port, const std::string& password, const uint32_t timeout)
 	: pRedisConnector_(nullptr)
@@ -59,6 +59,35 @@ void RedisConnector::PrintRedisErrorMessage(const int32_t errorCode) const
 	}
 }
 
+redisReply* RedisConnector::ExcuteRedisCommand(const char* pCommand)
+{
+
+	try
+	{
+		if (pRedisConnector_ == nullptr)	return nullptr;
+		if (pCommand == nullptr)			return nullptr;
+
+		// hiredis는 Raw포인터를 받기 때문에 여기부터는 스마트포인터가 아닌 Raw로 전달
+		// 객체 수명관리는 Hiredis를 제외한 곳에서 사용할 때 사용하기 위해 
+		redisReply* pRedisReplay = static_cast<redisReply*> (redisCommand(*pRedisConnector_.get(), pCommand));
+		if (pRedisReplay != nullptr)
+		{
+			if (REDIS_REPLY_ERROR == pRedisReplay->type)
+			{
+				freeReplyObject(pRedisReplay);
+				return nullptr;
+			}
+			return pRedisReplay;
+		}
+	}
+	catch (...)
+	{
+		PRINT_ERROR_LOG("ExcuteRedisCommand error\n");
+	}
+	return nullptr;
+}
+
+
 bool RedisConnector::Connect()
 {
 	redisContext* pTemp = redisConnect(redisServerIP_.c_str(), port_);
@@ -67,16 +96,11 @@ bool RedisConnector::Connect()
 	{
 		pRedisConnector_ = std::make_unique<redisContext*>(pTemp);
 
-		RedisProcessor* pRedisProcessor = new RedisProcessor(pRedisConnector_);
-		if (CreateDBProcessor(pRedisProcessor) == false) 
+		if (pRedisConnector_ == nullptr)
 		{
-			delete(pRedisProcessor);
 			return false;
 		}
-	}
-
-	if (pTemp == nullptr)
-	{
+		return true;
 	}
 	else if (pTemp->err)
 	{
@@ -84,15 +108,7 @@ bool RedisConnector::Connect()
 		return false;
 	}
 
-	else if (pRedisConnector_ == nullptr)
-	{
-	}
-	else
-	{
-		return true;
-	}
 	return false;
-
 }
 
 bool RedisConnector::Disconnect()
@@ -105,4 +121,49 @@ bool RedisConnector::Disconnect()
 		return true;
 	}
 	return false;
+}
+
+void RedisConnector::Excute(RedisQuery* pDBContext, DBContextCallBack<RedisResult> pCallBackFunction)
+{
+	CHECK_CONNECT_REDIS return;
+
+	RedisResult result{};
+
+	try
+	{
+		if (pDBContext->CreateRedisCommand() == true)
+		{
+			result.redsiType_ = pDBContext->GetRedisType();
+			redisReply* pRedisReplay = ExcuteRedisCommand(pDBContext->GetRedisCommand());
+			if (pRedisReplay != nullptr)
+			{
+				result.result_ = true;
+
+				//Read Data
+				if (pRedisReplay->type == REDIS_REPLY_STRING || pRedisReplay->type == REDIS_REPLY_ARRAY)
+				{
+					result.pData_ = std::shared_ptr<redisReply>(pRedisReplay, [](redisReply* reply)
+						{
+							std::cout << "커스텀삭제자 호출\n";
+							freeReplyObject(reply);
+						});
+				}
+				else
+				{
+					freeReplyObject(pRedisReplay);
+				}
+			}
+			else
+			{
+				std::cout << pDBContext->GetKey() << ": ";
+				result.result_ = false;
+			}
+		}
+	}
+	catch (...)
+	{
+		PRINT_ERROR_LOG("ExcuteQuery error\n");
+	}
+	//결과전송
+	pCallBackFunction(result);
 }

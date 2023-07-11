@@ -20,20 +20,19 @@ private:
 	std::string						password_;
 	uint16_t						port_;
 	uint32_t						timeout_;
+private:
+	redisContext*   GetRedisContextPointer()const;
+	bool			CheckRedisReply(redisReply* pRedisReplay);
+	bool			IsConnectRedisServer()const;
+	void			PrintRedisErrorMessage(const int32_t errorCode)const;
+	redisReply*		ExcuteRedisCommand(const char* pCommand);
 public:
 	RedisConnector(const std::string& redisServerIP, const uint16_t port, const std::string& password, const uint32_t timeout);
 	~RedisConnector();
 public:
 	bool Connect()override;
 	bool Disconnect()override;
-private:
-	redisContext*	GetRedisContextPointer()const;
-	bool			CheckRedisReply(redisReply* pRedisReplay);
-	bool			IsConnectRedisServer()const;
-	void			PrintRedisErrorMessage(const int32_t errorCode)const;
-public:
+	void Excute(RedisQuery* pDBContext, DBContextCallBack<RedisResult> pCallBackFunction = nullptr)override;
 };
 
-
-
-
+#define CHECK_CONNECT_REDIS  if(IsConnectRedisServer()==false) 
